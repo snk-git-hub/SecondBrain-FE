@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { Sidebar } from '../components/sidebarComponents';
 import { useContent } from '../hooks/useContent'; 
 
-export function Dashboard() {
+export function Dashboard(){
   const [modelOpen, setModelOpen] = useState(false);
   const { contentData, loading, error } = useContent();
 
