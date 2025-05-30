@@ -6,47 +6,157 @@ import { Card } from '../components/Card';
 import { CreateContentModel } from '../components/CreateContentModel';
 import { useState } from 'react';
 import { Sidebar } from '../components/sidebarComponents';
-import { useContent } from '../hooks/useContent'; 
+import { useContent } from '../hooks/useContent';
 
-export function Dashboard(){
+export function Dashboard() {
   const [modelOpen, setModelOpen] = useState(false);
   const { contentData, loading, error } = useContent();
 
   return (
-    <div className="flex">
+    <div className="min-h-screen bg-gray-50 flex">
+      {/* Sidebar */}
       <Sidebar />
-
-      <div className="flex-1 p-4 ml-72">
-        <div className="flex justify-end space-x-4 mb-4">
-          {modelOpen && (
-            <CreateContentModel open={modelOpen} onClose={() => setModelOpen(false)} />
-          )}
-
-          <Button
-            variant="primary"
-            text="Add Content"
-            startIcon={<PlusIcon />}
-            onClick={() => setModelOpen(true)}
-          />
-          <Button variant="secondary" text="Share" startIcon={<ShareIcon />} />
-        </div>
-
-        <div className="flex flex-wrap gap-4">
-          {loading && <p>Loading content...</p>}
-          {error && <p className="text-red-500">{error}</p>}
-
-          {!loading &&
-            !error &&
-            contentData.map((content, index) => (
-              <Card
-                key={index}
-                type={content.type}
-                link={content.link}
-                title={content.title}
+      
+      {/* Main Content Area */}
+      <div className="flex-1 ml-64">
+        {/* Header */}
+        <header className="bg-white border-b border-gray-200 px-6 py-4 sticky top-0 z-10 shadow-sm">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+              <p className="text-gray-600 text-sm mt-1">
+                Manage and organize your content
+              </p>
+            </div>
+            
+            <div className="flex items-center space-x-3">
+              <Button
+                variant="secondary"
+                text="Share"
+                startIcon={<ShareIcon />}
+                className="hover:bg-gray-100 transition-colors"
               />
-            ))}
-        </div>
+              <Button
+                variant="primary"
+                text="Add Content"
+                startIcon={<PlusIcon />}
+                onClick={() => setModelOpen(true)}
+                className="bg-blue-600 hover:bg-blue-700 transition-colors shadow-md"
+              />
+            </div>
+          </div>
+        </header>
+
+        {/* Content Area */}
+        <main className="p-6">
+          {/* Stats/Summary Section */}
+          <div className="mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
+                <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wide">
+                  Total Content
+                </h3>
+                <p className="text-3xl font-bold text-gray-900 mt-2">
+                  {contentData?.length || 0}
+                </p>
+              </div>
+              <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
+                <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wide">
+                  This Month
+                </h3>
+                <p className="text-3xl font-bold text-green-600 mt-2">+12</p>
+              </div>
+              <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
+                <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wide">
+                  Status
+                </h3>
+                <p className="text-3xl font-bold text-blue-600 mt-2">Active</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Content Grid */}
+          <div className="mb-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold text-gray-900">Your Content</h2>
+              <div className="text-sm text-gray-500">
+                {contentData?.length || 0} items
+              </div>
+            </div>
+
+            {/* Loading State */}
+            {loading && (
+              <div className="flex items-center justify-center py-12">
+                <div className="flex items-center space-x-3">
+                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+                  <p className="text-gray-600">Loading content...</p>
+                </div>
+              </div>
+            )}
+
+            {/* Error State */}
+            {error && (
+              <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0">
+                    <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <div className="ml-3">
+                    <p className="text-red-800 font-medium">Error loading content</p>
+                    <p className="text-red-600 text-sm">{error}</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Empty State */}
+            {!loading && !error && (!contentData || contentData.length === 0) && (
+              <div className="text-center py-12">
+                <div className="mx-auto h-24 w-24 text-gray-300 mb-4">
+                  <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-medium text-gray-900 mb-2">No content yet</h3>
+                <p className="text-gray-600 mb-6">Get started by creating your first piece of content.</p>
+                <Button
+                  variant="primary"
+                  text="Create Content"
+                  startIcon={<PlusIcon />}
+                  onClick={() => setModelOpen(true)}
+                  className="bg-blue-600 hover:bg-blue-700 transition-colors"
+                />
+              </div>
+            )}
+
+            {/* Content Cards Grid */}
+            {!loading && !error && contentData && contentData.length > 0 && (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {contentData.map((content, index) => (
+                  <div key={index} className="transform hover:scale-105 transition-transform duration-200">
+                    <Card
+                      type={content.type}
+                      link={content.link}
+                      title={content.title}
+                      className="h-full shadow-sm hover:shadow-md transition-shadow duration-200"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </main>
       </div>
+
+      {/* Modal */}
+      {modelOpen && (
+        <CreateContentModel 
+          open={modelOpen} 
+          onClose={() => setModelOpen(false)} 
+        />
+      )}
     </div>
   );
 }
