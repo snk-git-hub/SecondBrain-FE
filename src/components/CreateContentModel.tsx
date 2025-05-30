@@ -22,7 +22,7 @@ export function CreateContentModel({ open, onClose }) {
     const link = linkRef.current?.value;
     console.log({ title, link, type });
 
-    
+
     const response = await axios.post(
       `${BACKEND_URL}/api/v1/content`,
       {
@@ -36,8 +36,8 @@ export function CreateContentModel({ open, onClose }) {
         }
       }
     );
-    
-    
+
+
   }
 
   if (!open) return null;
@@ -46,7 +46,7 @@ export function CreateContentModel({ open, onClose }) {
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="absolute inset-0 bg-slate-500 opacity-60"></div>
 
-      <div className="relative z-10 bg-white p-6 rounded-lg shadow-2xl w-[340px]">
+      <div className="relative z-10 bg-white p-6 rounded-lg shadow-2xl w-[390px]">
         <div className="flex flex-col items-center space-y-6">
 
           <div className="flex justify-end w-full">
@@ -57,7 +57,7 @@ export function CreateContentModel({ open, onClose }) {
 
           <div className="w-full space-y-4">
             <Input reference={titleRef} label="Title" placeholder="Enter content title" />
-            <Input reference={linkRef} label="Link" placeholder="Enter video or tweet link" />
+            <Input reference={linkRef} label="Link" placeholder="Enter link" />
           </div>
 
           <div className="w-full">
@@ -77,8 +77,8 @@ export function CreateContentModel({ open, onClose }) {
           </div>
 
           <div className="w-full flex justify-center">
-  <Button onClick={()=>{addContent(); window.location.reload(); } }variant="primary" text="Submit" />
-</div>
+            <Button onClick={() => { addContent(); window.location.reload(); }} variant="primary" text="Submit" />
+          </div>
         </div>
       </div>
     </div>
