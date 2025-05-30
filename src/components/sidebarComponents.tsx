@@ -6,7 +6,7 @@ export function Sidebar() {
   return (
     <div className="h-screen bg-white border-r border-gray-200 w-64 fixed left-0 top-0 shadow-lg z-20">
       {/* Header/Brand Section */}
-      <div className="h-22.5 bg-gradient-to-r flex items-center justify-center border-b border-gray-200">
+      <div className="h-17 bg-gradient-to-r flex items-center justify-center border-b border-gray-200">
         <div className="flex items-center space-x-2">
           <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
             <svg
