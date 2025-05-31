@@ -24,7 +24,7 @@ function getTweetIdFromUrl(url: string): string | null {
 }
 
 
-export function Card({ title, link, type,  userId, onDelete }: CardProps) {
+export function Card({ title, link, type, userId, onDelete }: CardProps) {
   const youtubeEmbed = getYouTubeEmbedLink(link)
   const tweetId = getTweetIdFromUrl(link)
 
@@ -33,25 +33,23 @@ export function Card({ title, link, type,  userId, onDelete }: CardProps) {
 
       await Deletecontent(title, userId)
       if (onDelete) onDelete()
-        window.location.reload();
+      window.location.reload();
     } catch (err) {
       console.error("Delete failed:", err)
     }
   }
 
- 
-
   return (
     <div className="p-4 bg-white rounded-md max-w-72 border-2 border-gray-200">
-    <div className="flex justify-between">
-      {/* Left Side */}
-      <div className="flex items-center text-md">
-        <div className="pr-2 text-gray-500 cursor-pointer" onClick={handleDelete}>
-          <DeleteIcon />
+      <div className="flex justify-between">
+        {/* Left Side */}
+        <div className="flex items-center text-md">
+          <div className="pr-2 text-gray-500 cursor-pointer" onClick={handleDelete}>
+            <DeleteIcon />
+          </div>
+          {title}
         </div>
-        {title}
-      </div>
-        
+
         {/* Right Side */}
         <div className="flex items-center space-x-2">
           <a href={link} target="_blank" rel="noopener noreferrer">
