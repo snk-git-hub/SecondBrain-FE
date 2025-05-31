@@ -1,11 +1,14 @@
 import { ShareIcon } from "../icons/Shareicon"
 import { DeleteIcon } from "../icons/deleteicon"
 import { TwitterTweetEmbed } from "react-twitter-embed"
-
+import { Deletecontent } from "../hooks/deleteContent"
 interface CardProps {
   title: string
   link: string
   type: "twitter" | "youtube"
+  contentId: string
+  userId: string
+  onDelete?: () => void
 }
 
 function getYouTubeEmbedLink(url: string): string {
@@ -22,21 +25,30 @@ function getTweetIdFromUrl(url: string): string | null {
 }
 
 
-export function Card({ title, link, type }: CardProps) {
+export function Card({ title, link, type, contentId, userId, onDelete }: CardProps) {
   const youtubeEmbed = getYouTubeEmbedLink(link)
   const tweetId = getTweetIdFromUrl(link)
 
+  const handleDelete = async () => {
+    try {
+      await Deletecontent(contentId, userId)
+      if (onDelete) onDelete()
+    } catch (err) {
+      console.error("Delete failed:", err)
+    }
+  }
+
   return (
     <div className="p-4 bg-white rounded-md max-w-72 border-2 border-gray-200">
-      <div className="flex justify-between">
-        {/* Left Side */}
-        <div className="flex items-center text-md">
-          <div className="pr-2 text-gray-500">
-            <DeleteIcon />
-          </div>
-          {title}
+    <div className="flex justify-between">
+      {/* Left Side */}
+      <div className="flex items-center text-md">
+        <div className="pr-2 text-gray-500 cursor-pointer" onClick={handleDelete}>
+          <DeleteIcon />
         </div>
-
+        {title}
+      </div>
+        
         {/* Right Side */}
         <div className="flex items-center space-x-2">
           <a href={link} target="_blank" rel="noopener noreferrer">

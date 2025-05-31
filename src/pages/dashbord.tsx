@@ -9,7 +9,6 @@ import { Sidebar } from '../components/sidebarComponents';
 import { useContent } from '../hooks/useContent';
 import { shareContent } from '../hooks/shareContent';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-
 export function Dashboard() {
   const [modelOpen, setModelOpen] = useState(false);
   const [showLinkBox, setShowLinkBox] = useState(false);
@@ -20,7 +19,6 @@ export function Dashboard() {
     <div className="min-h-screen bg-white flex">
       {/* Sidebar */}
       <Sidebar />
-
       {/* Main Content Area */}
       <div className="flex-1 ml-64">
         {/* Header */}
@@ -32,7 +30,6 @@ export function Dashboard() {
                 Manage and organize your content
               </p>
             </div>
-
             <div className="flex items-center space-x-3">
               <Button
                 variant="secondary"
@@ -41,7 +38,6 @@ export function Dashboard() {
                 startIcon={<ShareIcon />}
                 className="hover:bg-white-100 transition-colors"
               />
-
               <Button
                 variant="primary"
                 text="Add Content"
@@ -52,7 +48,6 @@ export function Dashboard() {
             </div>
           </div>
         </header>
-
         {/* Share Link Box */}
         {showLinkBox && (
           <div className="m-6 p-4 border border-blue-200 rounded-md bg-blue-50">
@@ -61,15 +56,11 @@ export function Dashboard() {
                 {shareloading ? 'Generating link...' : sharelink}
               </div>
               <div>
-
                 <CopyToClipboard text={sharelink} onCopy={() => setCopied(true)}>
                   <button className="text-sm text-blue-600 underline ml-4 hover:text-blue-800 hover:underline hover:font-medium transition-colors duration-200">
                     Copy
                   </button>
                 </CopyToClipboard>
-
-
-
                 <button
                   className="text-sm text-blue-600 underline ml-4"
                   onClick={() => setShowLinkBox(false)}
@@ -83,7 +74,6 @@ export function Dashboard() {
             )}
           </div>
         )}
-
         {/* Content  */}
         <main className="p-6">
           {/* Stats */}
@@ -111,7 +101,6 @@ export function Dashboard() {
               </div>
             </div>
           </div>
-
           {/* Content*/}
           <div className="mb-6">
             <div className="flex items-center justify-between mb-4">
@@ -120,7 +109,6 @@ export function Dashboard() {
                 {contentData?.length || 0} items
               </div>
             </div>
-
             {/* Loading State */}
             {loading && (
               <div className="flex items-center justify-center py-12">
@@ -130,7 +118,6 @@ export function Dashboard() {
                 </div>
               </div>
             )}
-
             {/* when  Error !!!!!!!!!!!*/}
             {error && (
               <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
@@ -145,7 +132,6 @@ export function Dashboard() {
                 </div>
               </div>
             )}
-
             {/* when Empty!!!!!!!! */}
             {!loading && !error && (!contentData || contentData.length === 0) && (
               <div className="text-center py-12">
@@ -158,7 +144,6 @@ export function Dashboard() {
                 <p className="text-gray-600 mb-6">Get started by creating your first piece of content.</p>
               </div>
             )}
-
             {/* Content Cards  */}
             {!loading && !error && contentData && contentData.length > 0 && (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -177,7 +162,6 @@ export function Dashboard() {
           </div>
         </main>
       </div>
-
       {/* Modal */}
       {modelOpen && (
         <CreateContentModel
