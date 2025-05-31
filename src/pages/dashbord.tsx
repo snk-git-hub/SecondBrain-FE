@@ -8,13 +8,14 @@ import { useState } from 'react';
 import { Sidebar } from '../components/sidebarComponents';
 import { useContent } from '../hooks/useContent';
 import { shareContent } from '../hooks/shareContent';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 export function Dashboard() {
   const [modelOpen, setModelOpen] = useState(false);
   const [showLinkBox, setShowLinkBox] = useState(false);
   const { contentData, loading, error } = useContent();
   const { sharelink, loading: shareloading, error: shareerror } = shareContent();
-
+  const [copied, setCopied] = useState(false);
   return (
     <div className="min-h-screen bg-white flex">
       {/* Sidebar */}
@@ -59,12 +60,23 @@ export function Dashboard() {
               <div className="text-blue-800 font-medium">
                 {shareloading ? 'Generating link...' : sharelink}
               </div>
-              <button
-                className="text-sm text-blue-600 underline ml-4"
-                onClick={() => setShowLinkBox(false)}
-              >
-                Close
-              </button>
+              <div>
+
+                <CopyToClipboard text={sharelink} onCopy={() => setCopied(true)}>
+                  <button className="text-sm text-blue-600 underline ml-4 hover:text-blue-800 hover:underline hover:font-medium transition-colors duration-200">
+                    Copy
+                  </button>
+                </CopyToClipboard>
+
+
+
+                <button
+                  className="text-sm text-blue-600 underline ml-4"
+                  onClick={() => setShowLinkBox(false)}
+                >
+                  Close
+                </button>
+              </div>
             </div>
             {shareerror && (
               <p className="text-red-600 text-sm mt-2">Error: {shareerror}</p>

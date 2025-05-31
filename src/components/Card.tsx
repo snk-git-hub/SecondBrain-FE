@@ -8,14 +8,18 @@ interface CardProps {
 }
 
 function getYouTubeEmbedLink(url: string): string {
-  const videoIdMatch = url.match(/(?:youtu\.be\/|v=)([\w-]+)/)
-  return videoIdMatch ? `https://www.youtube.com/embed/${videoIdMatch[1]}` : ""
+  const match = url.match(
+    /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([\w-]{11})/
+  )
+  return match ? `https://www.youtube.com/embed/${match[1]}` : ""
 }
 
+
 function getTweetIdFromUrl(url: string): string | null {
-  const match = url.match(/status\/(\d+)/)
+  const match = url.match(/(?:status\/)(\d+)/)
   return match ? match[1] : null
 }
+
 
 export function Card({ title, link, type }: CardProps) {
   const youtubeEmbed = getYouTubeEmbedLink(link)
@@ -47,7 +51,7 @@ export function Card({ title, link, type }: CardProps) {
           <iframe
             className="w-full aspect-video"
             src={youtubeEmbed}
-            title="YouTube video player"
+            title={`YouTube video: ${title}`}
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
