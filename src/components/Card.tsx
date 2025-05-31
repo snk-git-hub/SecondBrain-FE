@@ -1,4 +1,5 @@
 import { ShareIcon } from "../icons/Shareicon"
+import { DeleteIcon } from "../icons/deleteicon"
 import { TwitterTweetEmbed } from "react-twitter-embed"
 
 interface CardProps {
@@ -31,7 +32,7 @@ export function Card({ title, link, type }: CardProps) {
         {/* Left Side */}
         <div className="flex items-center text-md">
           <div className="pr-2 text-gray-500">
-            <ShareIcon />
+            <DeleteIcon />
           </div>
           {title}
         </div>
