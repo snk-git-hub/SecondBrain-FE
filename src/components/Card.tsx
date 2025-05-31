@@ -6,7 +6,6 @@ interface CardProps {
   title: string
   link: string
   type: "twitter" | "youtube"
-  contentId: string
   userId: string
   onDelete?: () => void
 }
@@ -25,18 +24,22 @@ function getTweetIdFromUrl(url: string): string | null {
 }
 
 
-export function Card({ title, link, type, contentId, userId, onDelete }: CardProps) {
+export function Card({ title, link, type,  userId, onDelete }: CardProps) {
   const youtubeEmbed = getYouTubeEmbedLink(link)
   const tweetId = getTweetIdFromUrl(link)
 
   const handleDelete = async () => {
     try {
-      await Deletecontent(contentId, userId)
+
+      await Deletecontent(title, userId)
       if (onDelete) onDelete()
+        window.location.reload();
     } catch (err) {
       console.error("Delete failed:", err)
     }
   }
+
+ 
 
   return (
     <div className="p-4 bg-white rounded-md max-w-72 border-2 border-gray-200">

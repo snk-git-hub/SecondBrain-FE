@@ -1,6 +1,6 @@
 import axios from "axios"
 import { BACKEND_URL } from "../config"
-export async function Deletecontent(contentId: string, userId: string) {
+export async function Deletecontent(title: string, userId: string) {
     
     const token = localStorage.getItem("token");
     if (!token) throw new Error("token not found")
@@ -9,7 +9,7 @@ export async function Deletecontent(contentId: string, userId: string) {
             Authorization: `Bearer ${token}`,
           },
         data: {
-            contentId,
+            title,
             userId
         }
     })
